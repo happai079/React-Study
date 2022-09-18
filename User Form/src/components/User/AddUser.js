@@ -3,7 +3,6 @@ import classes from './AddUser.module.css';
 import Card from './../UI/Card';
 import Button from '../UI/Button';
 import ErrorModal from '../UI/ErrorModal';
-import Wrapper from './../Helpers/Wrapper';
 
 function AddUser(props) {
 	const [enteredUsername, setEnteredUsername] = useState('');
@@ -44,7 +43,7 @@ function AddUser(props) {
 	};
 
 	return (
-		<Wrapper>
+		<React.Fragment>
 			<Card className={classes.input}>
 				<form onSubmit={addUserHandler}>
 					<label htmlFor="username">Username</label>
@@ -71,7 +70,7 @@ function AddUser(props) {
 					onConfirm={errorHandler}
 				/>
 			)}
-		</Wrapper>
+		</React.Fragment>
 	);
 }
 
