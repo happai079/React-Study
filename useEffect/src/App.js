@@ -1,31 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const loginHandler = (email, password) => {
-    // We should of course check email and password
-    // But it's just a dummy/ demo anyways
-    setIsLoggedIn(true);
-  };
+	// 앱 시작시 한 번만 실행됨
+	useEffect(() => {
+		const storedUserLogin = localStorage.getItem('isLogIned');
+		if (storedUserLogin === '1') {
+			setIsLoggedIn(true);
+		}
+	}, []);
 
-  const logoutHandler = () => {
-    setIsLoggedIn(false);
-  };
+	const loginHandler = (email, password) => {
+		// We should of course check email and password
+		// But it's just a dummy/ demo anyways
+		localStorage.setItem('isLogIned', '1');
+		setIsLoggedIn(true);
+	};
 
-  return (
-    <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
-      <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
-      </main>
-    </React.Fragment>
-  );
+	const logoutHandler = () => {
+		localStorage.removeItem('isLogIned');
+		setIsLoggedIn(false);
+	};
+
+	return (
+		<React.Fragment>
+			<MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+			<main>
+				{!isLoggedIn && <Login onLogin={loginHandler} />}
+				{isLoggedIn && <Home onLogout={logoutHandler} />}
+			</main>
+		</React.Fragment>
+	);
 }
 
 export default App;
