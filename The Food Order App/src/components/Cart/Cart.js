@@ -12,7 +12,9 @@ function Cart(props) {
 	const addCartItemHandler = (item) => {
 		cartContext.addItem({ ...item, amount: 1 });
 	};
-	const removeCartItemHandler = (id) => {};
+	const removeCartItemHandler = (id) => {
+		cartContext.removeItem(id);
+	};
 
 	return (
 		<Modal onClose={props.onClose}>
